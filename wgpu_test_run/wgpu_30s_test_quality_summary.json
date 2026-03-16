@@ -1,0 +1,1414 @@
+{
+  "base": "/home/bb/sonar-gpu/artifacts/world_runs/wgpu_30s_test",
+  "frames_found": 117,
+  "frames_valid": 116,
+  "all_zero_frames": 0,
+  "any_all_zero_frame": false,
+  "max_zero_fraction_any_frame": 0.0,
+  "min_mean_mag_any_frame": 166.13933959766194,
+  "per_frame": [
+    {
+      "file": "SonarRawData_000001.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56994.23061312785,
+      "mean_mag": 167.9436056892362,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000002.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56994.23061312785,
+      "mean_mag": 167.9436056892362,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000003.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56994.23061312785,
+      "mean_mag": 167.9436056892362,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000004.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 64668.855728627204,
+      "mean_mag": 177.31016949523686,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000005.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 64668.855728627204,
+      "mean_mag": 177.31016949523686,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000006.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 64668.855728627204,
+      "mean_mag": 177.31016949523686,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000007.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 64668.855728627204,
+      "mean_mag": 177.31016949523686,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000008.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 64668.855728627204,
+      "mean_mag": 177.31016949523686,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000009.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 71389.94626542312,
+      "mean_mag": 174.3682077883939,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000010.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 71389.94626542312,
+      "mean_mag": 174.3682077883939,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000011.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 71389.94626542312,
+      "mean_mag": 174.3682077883939,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000012.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 71389.94626542312,
+      "mean_mag": 174.3682077883939,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000013.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59632.04279923672,
+      "mean_mag": 176.32567452111238,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000014.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59632.04279923672,
+      "mean_mag": 176.32567452111238,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000015.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59632.04279923672,
+      "mean_mag": 176.32567452111238,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000016.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59632.04279923672,
+      "mean_mag": 176.32567452111238,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000017.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 82130.5501596087,
+      "mean_mag": 170.08480222190806,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000018.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 82130.5501596087,
+      "mean_mag": 170.08480222190806,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000019.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 82130.5501596087,
+      "mean_mag": 170.08480222190806,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000020.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 82130.5501596087,
+      "mean_mag": 170.08480222190806,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000021.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 82130.5501596087,
+      "mean_mag": 170.08480222190806,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000022.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56711.10291759453,
+      "mean_mag": 184.70961850154026,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000023.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56711.10291759453,
+      "mean_mag": 184.70961850154026,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000024.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56711.10291759453,
+      "mean_mag": 184.70961850154026,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000025.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56711.10291759453,
+      "mean_mag": 184.70961850154026,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000026.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48850.20017645782,
+      "mean_mag": 173.2542172840808,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000027.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48850.20017645782,
+      "mean_mag": 173.2542172840808,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000028.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48850.20017645782,
+      "mean_mag": 173.2542172840808,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000029.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48850.20017645782,
+      "mean_mag": 173.2542172840808,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000030.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 68619.15424723698,
+      "mean_mag": 184.68083736489365,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000031.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 68619.15424723698,
+      "mean_mag": 184.68083736489365,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000032.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 68619.15424723698,
+      "mean_mag": 184.68083736489365,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000033.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 68619.15424723698,
+      "mean_mag": 184.68083736489365,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000034.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58917.18717974323,
+      "mean_mag": 166.13933959766194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000035.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58917.18717974323,
+      "mean_mag": 166.13933959766194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000036.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58917.18717974323,
+      "mean_mag": 166.13933959766194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000037.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58917.18717974323,
+      "mean_mag": 166.13933959766194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000038.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53386.98814514638,
+      "mean_mag": 179.96225066261744,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000039.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53386.98814514638,
+      "mean_mag": 179.96225066261744,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000040.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53386.98814514638,
+      "mean_mag": 179.96225066261744,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000041.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53386.98814514638,
+      "mean_mag": 179.96225066261744,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000042.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 62667.843404527644,
+      "mean_mag": 176.83214096859314,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000043.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 62667.843404527644,
+      "mean_mag": 176.83214096859314,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000044.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 62667.843404527644,
+      "mean_mag": 176.83214096859314,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000045.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 62667.843404527644,
+      "mean_mag": 176.83214096859314,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000046.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 72424.01545544129,
+      "mean_mag": 168.55626509684546,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000047.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 72424.01545544129,
+      "mean_mag": 168.55626509684546,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000048.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 72424.01545544129,
+      "mean_mag": 168.55626509684546,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000049.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 72424.01545544129,
+      "mean_mag": 168.55626509684546,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000050.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58419.55605385922,
+      "mean_mag": 172.17307374598235,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000051.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58419.55605385922,
+      "mean_mag": 172.17307374598235,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000052.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58419.55605385922,
+      "mean_mag": 172.17307374598235,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000053.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58419.55605385922,
+      "mean_mag": 172.17307374598235,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000054.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59516.44351580494,
+      "mean_mag": 170.76726390730644,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000055.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59516.44351580494,
+      "mean_mag": 170.76726390730644,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000056.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59516.44351580494,
+      "mean_mag": 170.76726390730644,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000057.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 59516.44351580494,
+      "mean_mag": 170.76726390730644,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000058.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61918.05974310242,
+      "mean_mag": 170.7644374569665,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000059.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61918.05974310242,
+      "mean_mag": 170.7644374569665,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000060.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61918.05974310242,
+      "mean_mag": 170.7644374569665,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000061.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61918.05974310242,
+      "mean_mag": 170.7644374569665,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000062.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56088.79192937213,
+      "mean_mag": 170.98530471442743,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000063.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56088.79192937213,
+      "mean_mag": 170.98530471442743,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000064.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56088.79192937213,
+      "mean_mag": 170.98530471442743,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000065.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53717.04053696554,
+      "mean_mag": 178.06552399592547,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000066.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53717.04053696554,
+      "mean_mag": 178.06552399592547,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000067.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53717.04053696554,
+      "mean_mag": 178.06552399592547,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000068.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 53717.04053696554,
+      "mean_mag": 178.06552399592547,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000069.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 52300.22366013361,
+      "mean_mag": 173.40273033650752,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000070.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 52300.22366013361,
+      "mean_mag": 173.40273033650752,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000071.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 52300.22366013361,
+      "mean_mag": 173.40273033650752,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000072.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 52300.22366013361,
+      "mean_mag": 173.40273033650752,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000073.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56523.21272760422,
+      "mean_mag": 178.98351465657194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000074.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56523.21272760422,
+      "mean_mag": 178.98351465657194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000075.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56523.21272760422,
+      "mean_mag": 178.98351465657194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000076.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 56523.21272760422,
+      "mean_mag": 178.98351465657194,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000077.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 50954.55039503342,
+      "mean_mag": 170.02333672255972,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000078.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 50954.55039503342,
+      "mean_mag": 170.02333672255972,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000079.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 50954.55039503342,
+      "mean_mag": 170.02333672255972,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000080.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 70197.42480070048,
+      "mean_mag": 175.1963630473058,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000081.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 70197.42480070048,
+      "mean_mag": 175.1963630473058,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000082.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 70197.42480070048,
+      "mean_mag": 175.1963630473058,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000083.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 70197.42480070048,
+      "mean_mag": 175.1963630473058,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000084.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 63229.084209721084,
+      "mean_mag": 177.34122309863574,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000085.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 63229.084209721084,
+      "mean_mag": 177.34122309863574,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000086.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 63229.084209721084,
+      "mean_mag": 177.34122309863574,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000087.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 63229.084209721084,
+      "mean_mag": 177.34122309863574,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000088.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 55310.20807093389,
+      "mean_mag": 179.19219215043842,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000089.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 55310.20807093389,
+      "mean_mag": 179.19219215043842,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000090.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 55310.20807093389,
+      "mean_mag": 179.19219215043842,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000091.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 55310.20807093389,
+      "mean_mag": 179.19219215043842,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000092.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61110.12100298934,
+      "mean_mag": 174.8700397346993,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000093.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61110.12100298934,
+      "mean_mag": 174.8700397346993,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000094.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61110.12100298934,
+      "mean_mag": 174.8700397346993,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000095.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 61110.12100298934,
+      "mean_mag": 174.8700397346993,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000096.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58501.48737669924,
+      "mean_mag": 175.71628277785427,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000097.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58501.48737669924,
+      "mean_mag": 175.71628277785427,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000098.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58501.48737669924,
+      "mean_mag": 175.71628277785427,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000099.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 58501.48737669924,
+      "mean_mag": 175.71628277785427,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000100.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 57851.07824518052,
+      "mean_mag": 179.34074402825797,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000101.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 57851.07824518052,
+      "mean_mag": 179.34074402825797,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000102.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 57851.07824518052,
+      "mean_mag": 179.34074402825797,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000103.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 49238.43715279761,
+      "mean_mag": 168.09231600718346,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000104.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 49238.43715279761,
+      "mean_mag": 168.09231600718346,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000105.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 49238.43715279761,
+      "mean_mag": 168.09231600718346,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000106.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 49238.43715279761,
+      "mean_mag": 168.09231600718346,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000107.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 66893.55902364592,
+      "mean_mag": 178.97480494242856,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000108.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 66893.55902364592,
+      "mean_mag": 178.97480494242856,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000109.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 66893.55902364592,
+      "mean_mag": 178.97480494242856,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000110.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 66893.55902364592,
+      "mean_mag": 178.97480494242856,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000111.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48262.89898804257,
+      "mean_mag": 167.4251570787733,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000112.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48262.89898804257,
+      "mean_mag": 167.4251570787733,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000113.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48262.89898804257,
+      "mean_mag": 167.4251570787733,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000114.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 48262.89898804257,
+      "mean_mag": 167.4251570787733,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000115.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 50699.06623716062,
+      "mean_mag": 170.39258009806923,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    },
+    {
+      "file": "SonarRawData_000116.csv",
+      "shape": [
+        399,
+        514
+      ],
+      "max_mag": 50699.06623716062,
+      "mean_mag": 170.39258009806923,
+      "zero_values": 0,
+      "zero_fraction": 0.0,
+      "all_zero": false
+    }
+  ],
+  "generated_plots": [
+    "wgpu_30s_test_frame_first.png",
+    "wgpu_30s_test_frame_mid.png",
+    "wgpu_30s_test_frame_last.png",
+    "wgpu_30s_test_frame_trend.png",
+    "wgpu_30s_test_polar_first.png",
+    "wgpu_30s_test_polar_mid.png",
+    "wgpu_30s_test_polar_last.png",
+    "wgpu_30s_test_frame1_beam_range_heatmap.png",
+    "wgpu_30s_test_range_profile_peaks.png"
+  ]
+}
