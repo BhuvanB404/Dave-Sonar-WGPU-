@@ -1,0 +1,886 @@
+<?xml version="1.0"?>
+<!--
+  ============================================================
+  DAVE Multibeam Sonar — Comprehensive Test World
+  ============================================================
+
+  SENSOR MOUNT:
+    The sonar sensor model (blueview_p900 or equivalent) is
+    expected to be spawned separately via launch file at:
+      pose: x=0  y=0  z=2.0  yaw=0  (faces +X direction)
+
+    z=2.0 m puts it mid-water-column in a ~4m deep tank.
+    The 12 deg vertical FOV intersects targets placed at z=2.0
+    (same height as sensor) and grazes higher/lower targets.
+
+  COORDINATE CONVENTION:
+    - Sonar faces +X
+    - Horizontal FOV: 130 deg  → covers roughly y = ±tan(65°)·r
+    - Vertical FOV:   12  deg  → z slice ≈ ±0.10·r at range r
+
+  TEST ZONES (all targets face the sonar or have known normals):
+    Zone A — Near field   (1–3 m)    : high SNR, geometry verification
+    Zone B — Mid field    (4–7 m)    : nominal operating range
+    Zone C — Far field    (8–12 m)   : attenuation, speckle, SNR floor
+    Zone D — Off-axis     (>±35 deg) : beam pattern side-lobe test
+    Zone E — Oblique      (various)  : Lambert scattering angle test
+
+  SHAPES USED (each tests different scattering behaviour):
+    - Flat wall (normal parallel to sonar axis) → specular, max TS
+    - Flat wall (angled 45 deg)                → halved TS, asymmetric image
+    - Vertical cylinder                         → curved surface, range spread
+    - Tilted cylinder                           → range-angle ambiguity test
+    - Sphere                                    → constant TS at all angles
+    - Small cube (corner reflector)             → high TS, point-like
+    - Large flat floor / ceiling plates         → reverberation background
+
+  ============================================================
+-->
+
+<sdf version="1.6">
+  <world name="dave_sonar_test">
+
+    <!-- ═══════════════════════════════════════════════════════
+         PHYSICS + CORE PLUGINS
+    ═══════════════════════════════════════════════════════ -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="multibeam_sonar_system"
+            name="custom::MultibeamSonarSystem"/>
+
+    <!-- ═══════════════════════════════════════════════════════
+         LIGHTING — dim underwater-style ambient
+    ═══════════════════════════════════════════════════════ -->
+    <light name="sun" type="directional">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 20 0 0 0</pose>
+      <diffuse>0.4 0.5 0.6 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>0.1 0.1 -1</direction>
+    </light>
+
+    <scene>
+      <ambient>0.15 0.2 0.25 1</ambient>
+      <background>0.05 0.08 0.12 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <!-- ═══════════════════════════════════════════════════════
+         GUI
+    ═══════════════════════════════════════════════════════ -->
+    <gui fullscreen="0">
+
+      <plugin filename="MinimalScene" name="3D View">
+        <gz-gui>
+          <title>3D View</title>
+          <property type="bool"   key="showTitleBar">false</property>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+        <engine>ogre2</engine>
+        <scene>scene</scene>
+        <ambient_light>0.3 0.4 0.5</ambient_light>
+        <background_color>0.05 0.08 0.12</background_color>
+        <!-- Camera sits behind the sonar, slightly above, looking along +X -->
+        <camera_pose>-4 0 4 0 0.4 0</camera_pose>
+      </plugin>
+
+      <plugin filename="EntityContextMenuPlugin" name="Entity context menu">
+        <gz-gui>
+          <property key="state"        type="string">floating</property>
+          <property key="width"        type="double">5</property>
+          <property key="height"       type="double">5</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="GzSceneManager" name="Scene Manager">
+        <gz-gui>
+          <property key="resizable"    type="bool">false</property>
+          <property key="state"        type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="InteractiveViewControl" name="Interactive view control">
+        <gz-gui>
+          <property key="resizable"    type="bool">false</property>
+          <property key="state"        type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="CameraTracking" name="Camera Tracking">
+        <gz-gui>
+          <property key="resizable"    type="bool">false</property>
+          <property key="state"        type="string">floating</property>
+          <property key="showTitleBar" type="bool">false</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="WorldControl" name="World control">
+        <gz-gui>
+          <title>World control</title>
+          <property type="bool"   key="showTitleBar">false</property>
+          <property type="bool"   key="resizable">false</property>
+          <property type="double" key="height">72</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="left"   target="left"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </gz-gui>
+        <play_pause>true</play_pause>
+        <step>true</step>
+        <start_paused>true</start_paused>
+        <use_event>true</use_event>
+      </plugin>
+
+      <plugin filename="WorldStats" name="World stats">
+        <gz-gui>
+          <title>World stats</title>
+          <property type="bool"   key="showTitleBar">false</property>
+          <property type="bool"   key="resizable">false</property>
+          <property type="double" key="height">110</property>
+          <property type="double" key="width">290</property>
+          <property type="double" key="z">1</property>
+          <property type="string" key="state">floating</property>
+          <anchors target="3D View">
+            <line own="right"  target="right"/>
+            <line own="bottom" target="bottom"/>
+          </anchors>
+        </gz-gui>
+        <sim_time>true</sim_time>
+        <real_time>true</real_time>
+        <real_time_factor>true</real_time_factor>
+        <iterations>true</iterations>
+      </plugin>
+
+      <plugin filename="ComponentInspector" name="Component inspector">
+        <gz-gui>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+      </plugin>
+
+      <plugin filename="EntityTree" name="Entity tree">
+        <gz-gui>
+          <property type="string" key="state">docked</property>
+        </gz-gui>
+      </plugin>
+
+      <!-- Sonar point cloud GUI plugin intentionally disabled.
+           The default PointCloud GUI widget expects an auxiliary float
+           vector that doesn't match this sonar publisher and spams warnings. -->
+
+    </gui>
+
+    <!-- ═══════════════════════════════════════════════════════
+         TANK STRUCTURE
+         A 20×12×5 m tank (L×W×H). Sensor at x=0,y=0,z=2.
+         Tank walls provide background reverberation.
+         Walls are thin (0.15 m) with low reflectivity materials.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!-- Back wall — behind sensor, blocks any rear-lobe -->
+    <model name="tank_wall_back">
+      <static>true</static>
+      <pose>-1.0 0 2.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.15 12.0 5.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.15 12.0 5.0</size></box></geometry>
+          <material>
+            <ambient>0.3 0.3 0.4 1</ambient>
+            <diffuse>0.3 0.3 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Far end wall — max range return, specular normal along X -->
+    <model name="tank_wall_far">
+      <static>true</static>
+      <!-- At x=14 m: provides a bright specular return at 14 m range -->
+      <pose>14.0 0 2.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.15 12.0 5.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.15 12.0 5.0</size></box></geometry>
+          <material>
+            <ambient>0.35 0.35 0.45 1</ambient>
+            <diffuse>0.35 0.35 0.45 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Left wall (y = +6) -->
+    <model name="tank_wall_left">
+      <static>true</static>
+      <pose>6.5 6.0 2.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>15.0 0.15 5.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 0.15 5.0</size></box></geometry>
+          <material>
+            <ambient>0.3 0.3 0.4 1</ambient>
+            <diffuse>0.3 0.3 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Right wall (y = -6) -->
+    <model name="tank_wall_right">
+      <static>true</static>
+      <pose>6.5 -6.0 2.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>15.0 0.15 5.0</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 0.15 5.0</size></box></geometry>
+          <material>
+            <ambient>0.3 0.3 0.4 1</ambient>
+            <diffuse>0.3 0.3 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Floor (z = 0) — diffuse Lambert reflector, low reflectivity -->
+    <model name="tank_floor">
+      <static>true</static>
+      <pose>6.5 0 0.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>15.0 12.0 0.10</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 12.0 0.10</size></box></geometry>
+          <material>
+            <ambient>0.25 0.25 0.3 1</ambient>
+            <diffuse>0.25 0.25 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Ceiling (z = 5) — simulates water surface / tank top -->
+    <model name="tank_ceiling">
+      <static>true</static>
+      <pose>6.5 0 5.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>15.0 12.0 0.10</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>15.0 12.0 0.10</size></box></geometry>
+          <material>
+            <ambient>0.2 0.3 0.4 1</ambient>
+            <diffuse>0.2 0.3 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE A — NEAR FIELD  (1–3 m)
+         Purpose: geometry verification, high SNR ground truth.
+         All targets at z=2.0 (same height as sensor).
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      A1: Vertical cylinder on-axis at 1.5 m.
+          Expected: bright curved return centred on beam 0.
+          Tests: near-field range accuracy.
+    -->
+    <model name="A1_cylinder_onaxis_near">
+      <static>true</static>
+      <pose>1.5 0.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.15</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.15</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>1.0 0.9 0.1 1</ambient>
+            <diffuse>1.0 0.9 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      A2: Small sphere off-axis left (+y) at 2.0 m, ~20 deg bearing.
+          Expected: point-like return at bearing ~+20 deg, range 2.0 m.
+          Tests: off-axis beam assignment in near field.
+    -->
+    <model name="A2_sphere_offaxis_left_near">
+      <static>true</static>
+      <!-- y = 2.0*tan(20°) ≈ 0.73 m -->
+      <pose>2.0 0.73 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+          <material>
+            <ambient>0.2 0.8 0.3 1</ambient>
+            <diffuse>0.2 0.8 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      A3: Small sphere off-axis right (-y) at 2.0 m, ~20 deg bearing.
+          Expected: symmetric return to A2 — tests beam pattern symmetry.
+    -->
+    <model name="A3_sphere_offaxis_right_near">
+      <static>true</static>
+      <pose>2.0 -0.73 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+          <material>
+            <ambient>0.2 0.8 0.3 1</ambient>
+            <diffuse>0.2 0.8 0.3 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      A4: Flat wall perpendicular to sonar axis at 3.0 m.
+          Normal faces sonar → maximum specular return (Lambert cos²(0°) = 1).
+          Expected: bright band across all beams at range 3.0 m.
+          Tests: absolute intensity calibration.
+    -->
+    <model name="A4_flat_wall_perpendicular_near">
+      <static>true</static>
+      <pose>3.0 0.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.10 3.0 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.10 3.0 1.2</size></box></geometry>
+          <material>
+            <ambient>0.9 0.9 0.9 1</ambient>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE B — MID FIELD  (4–7 m)
+         Purpose: nominal operating range, multi-target scene.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      B1: Pair of vertical cylinders separated by 0.4 m at 5.0 m.
+          Expected: two distinct returns — tests angular resolution.
+          Separation = 0.4 m at 5.0 m → subtends ~4.6 deg.
+          Useful for checking if beamwidth resolves them.
+    -->
+    <model name="B1a_cylinder_resolution_left">
+      <static>true</static>
+      <pose>5.0 0.20 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.0 0.6 1.0 1</ambient>
+            <diffuse>0.0 0.6 1.0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="B1b_cylinder_resolution_right">
+      <static>true</static>
+      <pose>5.0 -0.20 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.0 0.6 1.0 1</ambient>
+            <diffuse>0.0 0.6 1.0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      B2: Tilted cylinder at 5.5 m, 30 deg left bearing.
+          Tilted 45 deg around Z so its axis is oblique to the sonar.
+          Expected: elongated smeared return — tests angle ambiguity.
+    -->
+    <model name="B2_cylinder_tilted_midleft">
+      <static>true</static>
+      <!-- x=5.5*cos(30°)=4.76, y=5.5*sin(30°)=2.75 -->
+      <pose>4.76 2.75 2.0 0 0 0.785</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.4</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.18</radius><length>1.4</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>1.0 0.4 0.0 1</ambient>
+            <diffuse>1.0 0.4 0.0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      B3: Flat wall at 45 deg angle to sonar axis, 6.0 m range, right side.
+          Normal is rotated 45 deg → Lambert TS drops, image is asymmetric.
+          Expected: weaker return on the far side, strong on near edge.
+          Tests: oblique incidence and Lambert angular dependence.
+    -->
+    <model name="B3_angled_wall_right">
+      <static>true</static>
+      <!-- x=6.0*cos(-25°)=5.44, y=6.0*sin(-25°)=-2.54 -->
+      <!-- Wall faces 45 deg away from sonar normal -->
+      <pose>5.44 -2.54 2.0 0 0 0.785</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.10 2.5 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.10 2.5 1.2</size></box></geometry>
+          <material>
+            <ambient>0.9 0.5 0.8 1</ambient>
+            <diffuse>0.9 0.5 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      B4: Large sphere on-axis at 7.0 m.
+          Provides a clean, range-stable return at mid-far boundary.
+          Tests: spherical target TS (constant with angle).
+    -->
+    <model name="B4_large_sphere_onaxis_mid">
+      <static>true</static>
+      <pose>7.0 0.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.40</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.40</radius></sphere></geometry>
+          <material>
+            <ambient>0.8 0.1 0.1 1</ambient>
+            <diffuse>0.8 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      B5: Tall vertical flat plate at 45 deg bearing left, 6.5 m range.
+          Plate normal faces the sonar directly.
+          Tests: off-axis specular return, beam pattern side lobes.
+    -->
+    <model name="B5_plate_45deg_left">
+      <static>true</static>
+      <!-- x=6.5*cos(45°)=4.60, y=6.5*sin(45°)=4.60 -->
+      <!-- rotate 45 deg so face points back at sonar -->
+      <pose>4.60 4.60 2.0 0 0 -0.785</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.10 2.0 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.10 2.0 1.2</size></box></geometry>
+          <material>
+            <ambient>0.5 0.9 0.5 1</ambient>
+            <diffuse>0.5 0.9 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE C — FAR FIELD  (8–12 m)
+         Purpose: attenuation, speckle noise floor, SNR degradation.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      C1: Large cylinder on-axis at 9.0 m.
+          At 9 m range, TL = 2*(20*log10(9) + α*9) is significant.
+          Tests: range-dependent intensity falloff.
+    -->
+    <model name="C1_large_cylinder_onaxis_far">
+      <static>true</static>
+      <pose>9.0 0.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.30</radius><length>1.4</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.30</radius><length>1.4</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>1.0 0.8 0.2 1</ambient>
+            <diffuse>1.0 0.8 0.2 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      C2: Large sphere at 30 deg left, 10.0 m range.
+          Tests: far-field off-axis return.
+    -->
+    <model name="C2_sphere_30deg_far">
+      <static>true</static>
+      <!-- x=10*cos(30°)=8.66, y=10*sin(30°)=5.0 -->
+      <pose>8.66 5.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.50</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.50</radius></sphere></geometry>
+          <material>
+            <ambient>0.3 0.3 1.0 1</ambient>
+            <diffuse>0.3 0.3 1.0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      C3: Flat wall at 11.0 m, 20 deg right, normal facing sonar.
+          Expected: bright band in right sector at 11 m.
+          Together with tank far wall at 14 m, creates layered returns.
+    -->
+    <model name="C3_flat_wall_far_right">
+      <static>true</static>
+      <!-- x=11*cos(-20°)=10.33, y=11*sin(-20°)=-3.76 -->
+      <!-- rotate to face sonar: yaw = 20 deg -->
+      <pose>10.33 -3.76 2.0 0 0 0.349</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.10 3.0 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.10 3.0 1.2</size></box></geometry>
+          <material>
+            <ambient>0.8 0.8 0.4 1</ambient>
+            <diffuse>0.8 0.8 0.4 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE D — EXTREME OFF-AXIS  (±50–60 deg bearing)
+         Purpose: test beam pattern side-lobe rejection.
+         Sensor has 130 deg horizontal FOV, so beams go to ±65 deg.
+         Targets here test the edges of the beam fan.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      D1: Cylinder at 55 deg left bearing, 4.0 m range.
+          Should appear at beam edge or in side lobes.
+    -->
+    <model name="D1_cylinder_55deg_left">
+      <static>true</static>
+      <!-- x=4*cos(55°)=2.29, y=4*sin(55°)=3.28 -->
+      <pose>2.29 3.28 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.20</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.20</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.7 0.0 0.7 1</ambient>
+            <diffuse>0.7 0.0 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      D2: Cylinder at 55 deg right bearing, 4.0 m range. Mirror of D1.
+    -->
+    <model name="D2_cylinder_55deg_right">
+      <static>true</static>
+      <pose>2.29 -3.28 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.20</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.20</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.7 0.0 0.7 1</ambient>
+            <diffuse>0.7 0.0 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE E — VERTICAL BEAM SLICE TESTS
+         Purpose: test vertical FOV (12 deg).
+         Sensor is at z=2.0. At 5 m range, ±6 deg covers z=1.47–2.53.
+         Targets placed at different heights to test vertical resolving.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      E1: Sphere at z=3.5 (above beam centre) at 5.0 m range.
+          At 5 m range, beam top edge is at z = 2 + 5*tan(6°) ≈ 2.53 m.
+          z=3.5 is ABOVE the beam → should be invisible or very faint.
+          Tests: vertical FOV hard cutoff.
+    -->
+    <model name="E1_sphere_above_beam">
+      <static>true</static>
+      <pose>5.0 1.5 3.5 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.25</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.25</radius></sphere></geometry>
+          <material>
+            <!-- White — easy to spot visually that it's above the slice -->
+            <ambient>1.0 1.0 1.0 1</ambient>
+            <diffuse>1.0 1.0 1.0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      E2: Sphere just inside beam at z=2.4 (grazing beam top edge).
+          Expected: faint return, beam-edge amplitude.
+          Tests: vertical beam pattern roll-off.
+    -->
+    <model name="E2_sphere_grazing_beam_top">
+      <static>true</static>
+      <pose>5.0 -1.5 2.4 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><sphere><radius>0.20</radius></sphere></geometry>
+          <material>
+            <ambient>0.8 0.6 0.1 1</ambient>
+            <diffuse>0.8 0.6 0.1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      E3: Tall structure that spans the full beam vertical slice.
+          Placed on-axis at 4.0 m. Height 1.2 m centred on z=2.
+          Provides maximum height-integrated return (all elevation rays hit it).
+    -->
+    <model name="E3_tall_cylinder_fullslice">
+      <static>true</static>
+      <pose>4.0 0.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.22</radius><length>1.8</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.22</radius><length>1.8</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>1.0 0.2 0.6 1</ambient>
+            <diffuse>1.0 0.2 0.6 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE F — RANGE AMBIGUITY / OVERLAPPING RETURNS
+         Purpose: test that two targets at same bearing but different
+         ranges produce two distinct intensity peaks in the A-plot.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      F1: Front cylinder of tandem pair — on-axis at 3.5 m.
+    -->
+    <model name="F1_tandem_near_cylinder">
+      <static>true</static>
+      <pose>3.5 -1.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.0 1.0 0.8 1</ambient>
+            <diffuse>0.0 1.0 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      F2: Rear cylinder of tandem pair — same bearing as F1 but 2 m further.
+          Both subtend the same beam. A-plot should show two peaks at 3.5 and 5.5 m.
+    -->
+    <model name="F2_tandem_far_cylinder">
+      <static>true</static>
+      <pose>5.5 -1.0 2.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+        </collision>
+        <visual name="vis">
+          <geometry>
+            <cylinder><radius>0.12</radius><length>1.2</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.0 0.6 0.5 1</ambient>
+            <diffuse>0.0 0.6 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         ZONE G — REFLECTIVITY CONTRAST TEST
+         Same geometry, different material reflectivity (μ values).
+         Placed at equal ranges so only amplitude differs.
+         Useful for validating the Lambert scattering model calibration.
+    ═══════════════════════════════════════════════════════ -->
+
+    <!--
+      G1: High reflectivity block (bright) at 8.0 m, 15 deg left.
+          μ = 1e-2 equivalent (bright surface).
+    -->
+    <model name="G1_high_reflectivity_block">
+      <static>true</static>
+      <!-- x=8.0*cos(15°)=7.73, y=8.0*sin(15°)=2.07 -->
+      <pose>7.73 2.07 2.0 0 0 0.262</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.40 0.40 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.40 0.40 1.2</size></box></geometry>
+          <material>
+            <!-- Near-white = high reflectivity -->
+            <ambient>0.95 0.95 0.95 1</ambient>
+            <diffuse>0.95 0.95 0.95 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!--
+      G2: Low reflectivity block (dark) at 8.0 m, 15 deg right.
+          Same geometry as G1 — only reflectivity differs.
+          μ = 1e-5 equivalent (nearly acoustically transparent).
+    -->
+    <model name="G2_low_reflectivity_block">
+      <static>true</static>
+      <!-- x=8.0*cos(-15°)=7.73, y=8.0*sin(-15°)=-2.07 -->
+      <pose>7.73 -2.07 2.0 0 0 -0.262</pose>
+      <link name="link">
+        <collision name="col">
+          <geometry><box><size>0.40 0.40 1.2</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.40 0.40 1.2</size></box></geometry>
+          <material>
+            <!-- Near-black = low reflectivity -->
+            <ambient>0.08 0.08 0.10 1</ambient>
+            <diffuse>0.08 0.08 0.10 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

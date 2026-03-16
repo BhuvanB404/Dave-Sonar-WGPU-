@@ -1,0 +1,197 @@
+# To use:
+#
+#     pre-commit run -a
+#
+# Or:
+#
+#     pre-commit install  # (runs every time you commit in git)
+#
+# To update this file:
+#
+#     pre-commit autoupdate
+#
+# See https://github.com/pre-commit/pre-commit
+---
+# CANNOT USE (AMENT_LINT excutables are being called from local)
+# ci:
+#   autofix_commit_msg: |
+#     [pre-commit.ci] auto fixes from pre-commit.com hooks
+
+#     for more information, see https://pre-commit.ci
+#   autofix_prs: true
+#   autoupdate_branch: 'ros2'
+#   autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
+#   autoupdate_schedule: weekly
+#   skip: []
+#   submodules: false
+
+repos:
+  # Standard hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=2000"]
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: debug-statements
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+        exclude_types: [rst]
+      - id: fix-byte-order-marker
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: requirements-txt-fixer
+
+  # Python hooks
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.19.1
+    hooks:
+      - id: pyupgrade
+        args: [--py36-plus]
+
+  # PyDocStyle
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        args:
+          ["--ignore=D100,D101,D102,D103,D104,D105,D106,D107,D203,D212,D404"]
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        args: ["--line-length=99", "--exclude=tools/code_check"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+        args:
+          - "--ignore=E203,W503,E501"
+          - "--exclude=tools/code_check"
+
+
+  # CPP hooks
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v19.1.6
+    hooks:
+      - id: clang-format
+        args: ["-fallback-style=none", "-i"]
+        exclude: \.proto$
+
+  # - repo: local
+  #   hooks:
+  #     - id: ament_cppcheck
+  #       name: ament_cppcheck
+  #       description: Static code analysis of C/C++ files.
+  #       entry: env AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS=1 ament_cppcheck
+  #       language: system
+  #       files: \.(h\+\+|h|hh|hxx|hpp|cuh|c|cc|cpp|cu|c\+\+|cxx|tpp|txx)$
+
+  # - repo: https://github.com/cpplint/cpplint
+  #   rev: 1.6.1
+  #   hooks:
+  #     - id: cpplint
+  #       name: cpplint
+  #       description: Static code analysis of C/C++ files
+  #       language: python
+  #       files: \.(h\+\+|h|hh|hxx|hpp|cuh|c|cc|cpp|cu|c\+\+|cxx|tpp|txx)$
+  #       entry: cpplint
+  #       args: ["--linelength=100", "--filter=-whitespace/newline"]
+
+  # Cmake hooks (can be installed with pip3 install ament-lint-cmake-py)
+  - repo: local
+    hooks:
+      - id: ament_lint_cmake
+        name: ament_lint_cmake
+        description: Check format of CMakeLists.txt files.
+        entry: ament_lint_cmake
+        additional_dependencies: [ament-lint-cmake-py]
+        files: CMakeLists\.txt$
+        language: python
+        types: [file]
+
+  # Copyright (exclude for now, doesn't exist for nobel
+  # https://packages.ubuntu.com/search?keywords=ament+copyright&searchon=names)
+  # - repo: local
+  #   hooks:
+  #     - id: ament_copyright
+  #       name: ament_copyright
+  #       description: Check if copyright notice is available in all files.
+  #       entry: ament_copyright
+  #       language: system
+  #       exclude: .*/conf\.py$
+
+  # Docs - RestructuredText hooks
+  - repo: https://github.com/PyCQA/doc8
+    rev: v1.1.2
+    hooks:
+      - id: doc8
+        args: ["--max-line-length=100", "--ignore=D001"]
+        exclude: CHANGELOG\.rst$
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: rst-backticks
+        exclude: CHANGELOG\.rst$
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
+
+  # Spellcheck in comments and docs
+  # skipping of *.svg files is not working...
+  # - repo: https://github.com/codespell-project/codespell
+  #   rev: v2.3.0
+  #   hooks:
+  #     - id: codespell
+  #       args: ["--write-changes", "--uri-ignore-words-list=ist", "-L manuel"]
+  #       exclude: CHANGELOG\.rst|\.(svg|pyc|drawio)$
+
+  # Json lint
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.31.0
+    hooks:
+      - id: check-github-workflows
+        args: ["--verbose"]
+      - id: check-github-actions
+        args: ["--verbose"]
+      - id: check-dependabot
+        args: ["--verbose"]
+
+  # XML lint for xacro, urdf, and sdf files
+  - repo: https://github.com/pamoller/xmlformatter
+    rev: v0.2.8
+    hooks:
+      - id: xml-formatter
+        name: Format XML
+        description: Lint XML syntax in xacro, urdf, and sdf files.
+        language: python
+        types: [xml]
+        entry: xmlformat
+        args:
+          - "--overwrite"
+        files: '\.(xacro|urdf|sdf|xml|launch|world)$'
+
+  # Yaml lint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        name: yamllint
+        description: This hook runs yamllint.
+        entry: >
+          yamllint -d "{
+            extends: default,
+            rules: {
+              line-length: {max: 120},
+              new-line-at-end-of-file: disable
+            }
+          }"
+        language: python
+        types: [file, yaml]
+        files: '\.(yaml|yml)$'
